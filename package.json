@@ -1,0 +1,28 @@
+{
+  "name": "agents-js-demo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint -f unix \"**/*.ts\""
+  },
+  "packageManager": "pnpm@9.2.0",
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.1.0",
+    "@eslint/js": "^9.10.0",
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "@types/node": "^22.5.5",
+    "@typescript-eslint/eslint-plugin": "^8.6.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.30.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "typescript": "^5.6.2"
+  },
+  "dependencies": {
+    "@livekit/agents": "^0.2.0",
+    "@livekit/agents-plugin-openai": "^0.2.0",
+    "zod": "^3.23.8"
+  }
+}
