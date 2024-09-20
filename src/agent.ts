@@ -1,6 +1,9 @@
 import { type JobContext, WorkerOptions, cli, defineAgent } from '@livekit/agents';
 import { OmniAssistant, defaultConversationConfig } from '@livekit/agents-plugin-openai';
 import { z } from 'zod';
+import dotenv from 'dotenv';
+
+dotenv.config({ path: '.env.local' });
 
 export default defineAgent({
   entry: async (ctx: JobContext) => {
