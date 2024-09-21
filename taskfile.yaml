@@ -3,7 +3,7 @@ output: interleaved
 dotenv: [".env.local"]
 
 tasks:
-  post_create_sandbox:
+  post_create:
     desc: "Runs after this template is instantiated as a Sandbox or Bootstrap"
     cmds:
       - echo -e "To setup and run the agent:\n"
@@ -12,7 +12,7 @@ tasks:
       - echo -e "    pnpm build"
       - echo -e "    node dist/agent.js start\n"
 
-  install_sandbox:
+  install:
     desc: "Bootstrap application for local development"
     cmds:
       - "pnpm install"
