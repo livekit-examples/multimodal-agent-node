@@ -2,7 +2,7 @@
   <img src="./.github/assets/livekit-mark.png" alt="LiveKit logo" width="100" height="100">
 </a>
 
-# Node.js Voice Agent
+# Node.js Multimodal Voice Agent
 
 <p>
   <a href="https://cloud.livekit.io/projects/p_/sandbox"><strong>Deploy a sandbox app</strong></a>
@@ -14,7 +14,7 @@
   <a href="https://blog.livekit.io/">Blog</a>
 </p>
 
-A basic example of a voice agent using LiveKit and the Node.js [Agents Framework](https://github.com/livekit/agents-js).
+A basic example of a multimodal voice agent using LiveKit and the Node.js [Agents Framework](https://github.com/livekit/agents-js).
 
 ## Dev Setup
 
