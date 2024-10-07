@@ -17,6 +17,9 @@ export default defineAgent({
   entry: async (ctx: JobContext) => {
     await ctx.connect();
 
+    console.log('waiting for participant');
+    await ctx.waitForParticipant();
+
     console.log('starting assistant example agent');
 
     const model = new openai.realtime.RealtimeModel({
