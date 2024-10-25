@@ -50,8 +50,8 @@ export default defineAgent({
 
     session.conversation.item.create({
       type: 'message',
-      role: 'user',
-      content: [{ type: 'input_text', text: 'Say "How can I help you today?"' }],
+      role: 'assistant',
+      content: [{ type: 'text', text: 'Say "How can I help you today?"' }],
     });
     session.response.create();
   },
