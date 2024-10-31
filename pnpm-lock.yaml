@@ -9,11 +9,11 @@ importers:
   .:
     dependencies:
       '@livekit/agents':
-        specifier: ^0.3.2
-        version: 0.3.2
+        specifier: ^0.3.4
+        version: 0.3.4
       '@livekit/agents-plugin-openai':
-        specifier: ^0.3.2
-        version: 0.3.2
+        specifier: ^0.3.4
+        version: 0.3.4
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
@@ -175,11 +175,14 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
-  '@livekit/agents-plugin-openai@0.3.2':
-    resolution: {integrity: sha512-Dpu08vbeWpL8hiIbfYRne/ob/I5QX98sOa1PV0MgeF93K73cTg+W64PUeopBiUGtYiQNIz4tJ3QbiSvakkXAmA==}
+  '@livekit/agents-plugin-openai@0.3.4':
+    resolution: {integrity: sha512-zODOW2Iwv6TcgsNKTU25CXj4+Y3KPUEOS2pOOl3gP5C5C10RTLZdAl1HKoKWoaGTby27RgvOfsUGu4e3p2yPtA==}
 
-  '@livekit/agents@0.3.2':
-    resolution: {integrity: sha512-ViMduU3ClF4szSGIaVzqfW44701tiEzI0wx8Li4o0mJYnD8KBgfAgvxa9CYrIGPcC/OayLzYdoY5uQguDduC6Q==}
+  '@livekit/agents@0.3.4':
+    resolution: {integrity: sha512-OdB49oTY97ltZeBWEsQmxvxNlxw09lF6wZWgqed4HpnA0c0FxADpHK6tgexMXFgQWiaT4pdJXxBX15Bd/9IHrg==}
+
+  '@livekit/mutex@1.0.0':
+    resolution: {integrity: sha512-aiUhoThBNF9UyGTxEURFzJLhhPLIVTnQiEVMjRhPnfHNKLfo2JY9xovHKIus7B78UD5hsP6DlgpmAsjrz4U0Iw==}
 
   '@livekit/protocol@1.23.0':
     resolution: {integrity: sha512-Hh83moW437mWhiyRgoDMedJ/s/rCTfe3ACSaIJ3n2NlVaq/+BTuB/yH7a6alM1NEkGBSmgrEHxabDfozVUlgYg==}
@@ -1493,17 +1496,18 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@livekit/agents-plugin-openai@0.3.2':
+  '@livekit/agents-plugin-openai@0.3.4':
     dependencies:
-      '@livekit/agents': 0.3.2
+      '@livekit/agents': 0.3.4
       '@livekit/rtc-node': 0.9.0
       ws: 8.18.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
 
-  '@livekit/agents@0.3.2':
+  '@livekit/agents@0.3.4':
     dependencies:
+      '@livekit/mutex': 1.0.0
       '@livekit/protocol': 1.23.0
       '@livekit/rtc-node': 0.9.0
       commander: 12.1.0
@@ -1515,6 +1519,8 @@ snapshots:
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
+
+  '@livekit/mutex@1.0.0': {}
 
   '@livekit/protocol@1.23.0':
     dependencies:
