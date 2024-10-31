@@ -1,7 +1,14 @@
 // SPDX-FileCopyrightText: 2024 LiveKit, Inc.
 //
 // SPDX-License-Identifier: Apache-2.0
-import { WorkerOptions, cli, defineAgent, type llm, multimodal } from '@livekit/agents';
+import {
+  type JobContext,
+  WorkerOptions,
+  cli,
+  defineAgent,
+  type llm,
+  multimodal,
+} from '@livekit/agents';
 import * as openai from '@livekit/agents-plugin-openai';
 import dotenv from 'dotenv';
 import path from 'node:path';
@@ -13,7 +20,7 @@ const envPath = path.join(__dirname, '../.env.local');
 dotenv.config({ path: envPath });
 
 export default defineAgent({
-  entry: async (ctx) => {
+  entry: async (ctx: JobContext) => {
     await ctx.connect();
     console.log('waiting for participant');
     const participant = await ctx.waitForParticipant();
