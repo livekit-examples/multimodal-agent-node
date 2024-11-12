@@ -13,7 +13,7 @@ importers:
         version: 0.4.1
       '@livekit/agents-plugin-openai':
         specifier: ^0.4.1
-        version: 0.4.1(zod@3.23.8)
+        version: 0.4.3(zod@3.23.8)
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
@@ -282,11 +282,14 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
-  '@livekit/agents-plugin-openai@0.4.1':
-    resolution: {integrity: sha512-G94UPGTBmTcCaoJabVsYd1FhVWMApjtuOpt799f9hsEGENDf2VA2+mQ68oZsQ3wgvOcHMzC9PdoewtVR14e0uQ==}
+  '@livekit/agents-plugin-openai@0.4.3':
+    resolution: {integrity: sha512-HDMK/Qn05RopViImRYT/eIfhS309HN/EfJC8342TP22pL9luBbziccBE22XzByojQNTvW5szCZGLPKD9346hug==}
 
   '@livekit/agents@0.4.1':
     resolution: {integrity: sha512-zZnd19CWvm1i6PKzAgUw6gLdZOJ/QKzbIVSLNAZPQphCEEg3cPoe3fEf9XE7o9+n6e5sZ6FfmSUh/c7jxWmujw==}
+
+  '@livekit/agents@0.4.3':
+    resolution: {integrity: sha512-vVNEun6NdshokiCAGLY7ujFR0dzNBZpVo9B7NqoE6wktoggfhkOaydv1I2CJ9nk0hHgi4a2TOytmx9LO4H0oIw==}
 
   '@livekit/mutex@1.1.0':
     resolution: {integrity: sha512-XRLG+z/0uoyDioupjUiskjI06Y51U/IXVPJn7qJ+R3J75XX01irYVBM9MpxeJahpVoe9QhU4moIEolX+HO9U9g==}
@@ -362,8 +365,8 @@ packages:
   '@types/json5@0.0.29':
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
 
-  '@types/node-fetch@2.6.11':
-    resolution: {integrity: sha512-24xFj9R5+rfQJLRyM56qh+wnVSYhyXC2tkoBndtY0U+vubqNsYXGjufB2nn8Q6gt0LrARwL6UBtMCSVCwl4B1g==}
+  '@types/node-fetch@2.6.12':
+    resolution: {integrity: sha512-8nneRWKCg3rMtF69nLQJnOYUcbafYeFSjqkw3jCRLsqkWFlHaoQrr5mXmofFGOx3DKn7UfmBMyov8ySvLRVldA==}
 
   '@types/node@18.19.64':
     resolution: {integrity: sha512-955mDqvO2vFf/oL7V3WiUtiz+BugyX8uVbaT2H8oj3+8dRyH2FLiNdowe7eNqRM7IOIZvzDH76EoAT+gwm6aIQ==}
@@ -1100,6 +1103,10 @@ packages:
     resolution: {integrity: sha512-dBiyMJ2o3Adw7aBVuFxVOlYHmiZtGGS9zVksMuv/wiEVHY+6XSDzo0X67pZVkyGlq1moF4YZAReVY2Dbxve8NQ==}
     engines: {node: '>=19'}
 
+  livekit-server-sdk@2.8.1:
+    resolution: {integrity: sha512-l8egXU10jPuRJM2Df9Gk/KPEk6tBV0JEGG19cD5QeQtyIMgqULCCd/5yyG2FRvcWRf7pEyZZMXi63zDn7uaKHQ==}
+    engines: {node: '>=19'}
+
   locate-path@6.0.0:
     resolution: {integrity: sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==}
     engines: {node: '>=10'}
@@ -1785,9 +1792,9 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@livekit/agents-plugin-openai@0.4.1(zod@3.23.8)':
+  '@livekit/agents-plugin-openai@0.4.3(zod@3.23.8)':
     dependencies:
-      '@livekit/agents': 0.4.1
+      '@livekit/agents': 0.4.3
       '@livekit/rtc-node': 0.11.1
       openai: 4.71.1(zod@3.23.8)
       sharp: 0.33.5
@@ -1806,6 +1813,22 @@ snapshots:
       '@livekit/typed-emitter': 3.0.0
       commander: 12.1.0
       livekit-server-sdk: 2.7.3
+      pino: 8.21.0
+      pino-pretty: 11.3.0
+      ws: 8.18.0
+      zod: 3.23.8
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
+  '@livekit/agents@0.4.3':
+    dependencies:
+      '@livekit/mutex': 1.1.0
+      '@livekit/protocol': 1.27.1
+      '@livekit/rtc-node': 0.11.1
+      '@livekit/typed-emitter': 3.0.0
+      commander: 12.1.0
+      livekit-server-sdk: 2.8.1
       pino: 8.21.0
       pino-pretty: 11.3.0
       ws: 8.18.0
@@ -1879,7 +1902,7 @@ snapshots:
 
   '@types/json5@0.0.29': {}
 
-  '@types/node-fetch@2.6.11':
+  '@types/node-fetch@2.6.12':
     dependencies:
       '@types/node': 22.8.6
       form-data: 4.0.1
@@ -2735,6 +2758,12 @@ snapshots:
       camelcase-keys: 9.1.3
       jose: 5.9.6
 
+  livekit-server-sdk@2.8.1:
+    dependencies:
+      '@livekit/protocol': 1.27.1
+      camelcase-keys: 9.1.3
+      jose: 5.9.6
+
   locate-path@6.0.0:
     dependencies:
       p-locate: 5.0.0
@@ -2817,7 +2846,7 @@ snapshots:
   openai@4.71.1(zod@3.23.8):
     dependencies:
       '@types/node': 18.19.64
-      '@types/node-fetch': 2.6.11
+      '@types/node-fetch': 2.6.12
       abort-controller: 3.0.0
       agentkeepalive: 4.5.0
       form-data-encoder: 1.7.2
