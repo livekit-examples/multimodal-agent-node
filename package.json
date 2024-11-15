@@ -10,10 +10,10 @@
   "packageManager": "pnpm@9.2.0",
   "devDependencies": {
     "@eslint/eslintrc": "^3.1.0",
-    "@eslint/js": "^9.13.0",
+    "@eslint/js": "^9.14.0",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
-    "@types/node": "^22.8.6",
-    "@typescript-eslint/eslint-plugin": "^8.12.2",
+    "@types/node": "^22.9.0",
+    "@typescript-eslint/eslint-plugin": "^8.14.0",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.31.0",
@@ -21,8 +21,8 @@
     "typescript": "^5.6.3"
   },
   "dependencies": {
-    "@livekit/agents": "^0.4.1",
-    "@livekit/agents-plugin-openai": "^0.4.1",
+    "@livekit/agents": "^0.4.3",
+    "@livekit/agents-plugin-openai": "^0.4.3",
     "dotenv": "^16.4.5",
     "zod": "^3.23.8"
   }
