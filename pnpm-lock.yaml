@@ -12,8 +12,8 @@ importers:
         specifier: ^0.4.3
         version: 0.4.3
       '@livekit/agents-plugin-openai':
-        specifier: ^0.4.3
-        version: 0.4.3(zod@3.23.8)
+        specifier: ^0.6.0
+        version: 0.6.0(@livekit/agents@0.4.3)(@livekit/rtc-node@0.11.1)(zod@3.23.8)
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
@@ -282,8 +282,11 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
-  '@livekit/agents-plugin-openai@0.4.3':
-    resolution: {integrity: sha512-HDMK/Qn05RopViImRYT/eIfhS309HN/EfJC8342TP22pL9luBbziccBE22XzByojQNTvW5szCZGLPKD9346hug==}
+  '@livekit/agents-plugin-openai@0.6.0':
+    resolution: {integrity: sha512-gvUVVVO1QY5k0V5LuO7gPJuneE+Lwlq/60iplBS6xqKN/W0LwILcqUtLq3KRr3ftGzlSsTUopVDilfWVOFPSXQ==}
+    peerDependencies:
+      '@livekit/agents': ^0.4.5
+      '@livekit/rtc-node': ^0.11.1
 
   '@livekit/agents@0.4.3':
     resolution: {integrity: sha512-vVNEun6NdshokiCAGLY7ujFR0dzNBZpVo9B7NqoE6wktoggfhkOaydv1I2CJ9nk0hHgi4a2TOytmx9LO4H0oIw==}
@@ -1785,7 +1788,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@livekit/agents-plugin-openai@0.4.3(zod@3.23.8)':
+  '@livekit/agents-plugin-openai@0.6.0(@livekit/agents@0.4.3)(@livekit/rtc-node@0.11.1)(zod@3.23.8)':
     dependencies:
       '@livekit/agents': 0.4.3
       '@livekit/rtc-node': 0.11.1
