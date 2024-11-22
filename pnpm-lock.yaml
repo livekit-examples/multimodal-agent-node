@@ -10,10 +10,10 @@ importers:
     dependencies:
       '@livekit/agents':
         specifier: ^0.4.5
-        version: 0.4.5(@livekit/rtc-node@0.11.1)
+        version: 0.4.6(@livekit/rtc-node@0.11.1)
       '@livekit/agents-plugin-openai':
         specifier: ^0.6.0
-        version: 0.6.0(@livekit/agents@0.4.5(@livekit/rtc-node@0.11.1))(@livekit/rtc-node@0.11.1)(zod@3.23.8)
+        version: 0.6.0(@livekit/agents@0.4.6(@livekit/rtc-node@0.11.1))(@livekit/rtc-node@0.11.1)(zod@3.23.8)
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
@@ -288,8 +288,8 @@ packages:
       '@livekit/agents': ^0.4.5
       '@livekit/rtc-node': ^0.11.1
 
-  '@livekit/agents@0.4.5':
-    resolution: {integrity: sha512-4oza+tnUO42nk8AWOOhVV1SwcqCu2qBMeOJ4wbRRrjoOWl3Hf6gVA+hNKq7IjZqej4f6cp+drksOoKzzAaV3fw==}
+  '@livekit/agents@0.4.6':
+    resolution: {integrity: sha512-SVA6tW3o1ZVdQ0fGWwie+mMB4jkcNZzI0iYrOb0L9lDs9vW4C/4YlVtp8bOQSCxisG8HsCy+beVKbMTd0Mx9Fg==}
     peerDependencies:
       '@livekit/rtc-node': ^0.11.1
 
@@ -1795,9 +1795,9 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@livekit/agents-plugin-openai@0.6.0(@livekit/agents@0.4.5(@livekit/rtc-node@0.11.1))(@livekit/rtc-node@0.11.1)(zod@3.23.8)':
+  '@livekit/agents-plugin-openai@0.6.0(@livekit/agents@0.4.6(@livekit/rtc-node@0.11.1))(@livekit/rtc-node@0.11.1)(zod@3.23.8)':
     dependencies:
-      '@livekit/agents': 0.4.5(@livekit/rtc-node@0.11.1)
+      '@livekit/agents': 0.4.6(@livekit/rtc-node@0.11.1)
       '@livekit/rtc-node': 0.11.1
       openai: 4.73.0(zod@3.23.8)
       sharp: 0.33.5
@@ -1808,7 +1808,7 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@livekit/agents@0.4.5(@livekit/rtc-node@0.11.1)':
+  '@livekit/agents@0.4.6(@livekit/rtc-node@0.11.1)':
     dependencies:
       '@livekit/mutex': 1.1.0
       '@livekit/protocol': 1.27.1
