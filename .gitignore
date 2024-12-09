@@ -185,3 +185,6 @@ docs
 
 # direnv
 .direnv
+
+# pnpm-lock isn't needed here, and it causes some weird dependency conflicts.
+pnpm-lock.yaml
