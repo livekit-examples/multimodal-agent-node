@@ -21,7 +21,7 @@
     "typescript": "^5.6.3"
   },
   "dependencies": {
-    "@livekit/agents": "^0.6.0",
+    "@livekit/agents": "^0.4.5",
     "@livekit/agents-plugin-openai": "^0.6.0",
     "dotenv": "^16.4.5",
     "zod": "^3.23.8"
