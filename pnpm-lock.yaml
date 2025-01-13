@@ -40,14 +40,14 @@ importers:
         specifier: ^8.57.1
         version: 8.57.1
       eslint-config-prettier:
-        specifier: ^9.1.0
-        version: 9.1.0(eslint@8.57.1)
+        specifier: ^10.0.0
+        version: 10.0.1(eslint@8.57.1)
       eslint-plugin-import:
         specifier: ^2.31.0
         version: 2.31.0(@typescript-eslint/parser@8.6.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1)
       eslint-plugin-prettier:
         specifier: ^5.2.1
-        version: 5.2.1(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint@8.57.1)(prettier@3.3.3)
+        version: 5.2.1(eslint-config-prettier@10.0.1(eslint@8.57.1))(eslint@8.57.1)(prettier@3.3.3)
       typescript:
         specifier: ^5.6.3
         version: 5.6.3
@@ -292,9 +292,6 @@ packages:
     resolution: {integrity: sha512-xjfJRYepU2kdCcCdbstYFg0LtXLDQhgN+9yC68P4LVg8bBjfv+8hZDUgRnA2HVAib2rpypVTR3pqKWWCLSwzIg==}
     peerDependencies:
       '@livekit/rtc-node': ^0.12.1
-
-  '@livekit/mutex@1.1.0':
-    resolution: {integrity: sha512-XRLG+z/0uoyDioupjUiskjI06Y51U/IXVPJn7qJ+R3J75XX01irYVBM9MpxeJahpVoe9QhU4moIEolX+HO9U9g==}
 
   '@livekit/mutex@1.1.1':
     resolution: {integrity: sha512-EsshAucklmpuUAfkABPxJNhzj9v2sG7JuzFDL4ML1oJQSV14sqrpTYnsaOudMAw9yOaW53NU3QQTlUQoRs4czw==}
@@ -700,8 +697,8 @@ packages:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
 
-  eslint-config-prettier@9.1.0:
-    resolution: {integrity: sha512-NSWl5BFQWEPi1j4TjVNItzYV7dZXZ+wP6I6ZhrBGpChQhZRUaElihE9uRRkcbRnNb76UMKDF3r+WTmNcGPKsqw==}
+  eslint-config-prettier@10.0.1:
+    resolution: {integrity: sha512-lZBts941cyJyeaooiKxAtzoPHTN+GbQTJFAIdQbRhA4/8whaAraEh47Whw/ZFfrjNSnlAxqfm9i0XVAEkULjCw==}
     hasBin: true
     peerDependencies:
       eslint: '>=7.0.0'
@@ -1827,8 +1824,6 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@livekit/mutex@1.1.0': {}
-
   '@livekit/mutex@1.1.1': {}
 
   '@livekit/protocol@1.30.0':
@@ -1853,7 +1848,7 @@ snapshots:
   '@livekit/rtc-node@0.11.1':
     dependencies:
       '@bufbuild/protobuf': 2.2.2
-      '@livekit/mutex': 1.1.0
+      '@livekit/mutex': 1.1.1
       '@livekit/typed-emitter': 3.0.0
     optionalDependencies:
       '@livekit/rtc-node-darwin-arm64': 0.11.1
@@ -2318,7 +2313,7 @@ snapshots:
 
   escape-string-regexp@4.0.0: {}
 
-  eslint-config-prettier@9.1.0(eslint@8.57.1):
+  eslint-config-prettier@10.0.1(eslint@8.57.1):
     dependencies:
       eslint: 8.57.1
 
@@ -2369,14 +2364,14 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-plugin-prettier@5.2.1(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint@8.57.1)(prettier@3.3.3):
+  eslint-plugin-prettier@5.2.1(eslint-config-prettier@10.0.1(eslint@8.57.1))(eslint@8.57.1)(prettier@3.3.3):
     dependencies:
       eslint: 8.57.1
       prettier: 3.3.3
       prettier-linter-helpers: 1.0.0
       synckit: 0.9.2
     optionalDependencies:
-      eslint-config-prettier: 9.1.0(eslint@8.57.1)
+      eslint-config-prettier: 10.0.1(eslint@8.57.1)
 
   eslint-scope@7.2.2:
     dependencies:
