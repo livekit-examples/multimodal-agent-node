@@ -417,6 +417,7 @@ const startVoiceAgent = async (context: JobContext) => {
     model: realtimeModel,
     chatCtx: chatContext,
     fncCtx: functionContext,
+    
   });
 
   //voiceAgent.on('agent_started_speaking', () => { console.info('agent_started_speaking'); });
