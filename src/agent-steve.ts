@@ -1,15 +1,15 @@
-import dotenv from 'dotenv';
+// @ts-nocheck
 import { Zep, ZepClient } from '@getzep/zep-cloud';
 import { type JobContext, WorkerOptions, cli, defineAgent, llm, multimodal } from '@livekit/agents';
 import * as openai from '@livekit/agents-plugin-openai';
-import { SipClient, } from 'livekit-server-sdk';
 import type { Participant } from '@livekit/rtc-node';
 import { ParticipantKind } from '@livekit/rtc-node';
-import { z } from 'zod';
+// ignore this file for now
+import Prisma from '@prisma/client';
+import dotenv from 'dotenv';
+import { SipClient } from 'livekit-server-sdk';
 import { fileURLToPath } from 'node:url';
-
-// import Prisma from '@prisma/client';
-
+import { z } from 'zod';
 
 // dotenv.config({
 //   path: path.join(path.dirname(fileURLToPath(import.meta.url)), '.env'),
@@ -26,8 +26,6 @@ const sipClient = new SipClient(
 const zepClient = new ZepClient({
   apiKey: process.env.ZEP_API_KEY,
 });
-
-
 
 const getVoiceAgentUser = async (
   organisationId: number,
@@ -158,8 +156,8 @@ const getUserMemoryText = async (
       });
       const zepSessionMemory = user.sessionUuid
         ? await zepClient.memory.get(
-          `${process.env.VOICEAGENT_ZEP_PREFIX ?? ''}${user.sessionUuid}`,
-        )
+            `${process.env.VOICEAGENT_ZEP_PREFIX ?? ''}${user.sessionUuid}`,
+          )
         : undefined;
 
       return zepSessionMemory?.context;
@@ -310,7 +308,7 @@ const startVoiceAgent = async (context: JobContext) => {
     functionContext[sipCall.name] = {
       description: sipCall.description || `Place a call to ${sipCall.label}.`,
       parameters: z.object({}),
-      execute: async ({ }) => {
+      execute: async ({}) => {
         console.log(`executing SIP call function '${sipCall.name}' to '${sipCall.target}'`);
         //addSessionMessage(session, agent.useMemory, Prisma.MessageRole.function, `Triggering SIP Call '${sipCall.label}'.`);
 
@@ -370,7 +368,7 @@ const startVoiceAgent = async (context: JobContext) => {
     functionContext[sipTransfer.name] = {
       description: sipTransfer.description || `Transfer to ${sipTransfer.label}.`,
       parameters: z.object({}),
-      execute: async ({ }) => {
+      execute: async ({}) => {
         console.log(
           `executing SIP transfer function '${sipTransfer.name}' to '${sipTransfer.target}'`,
         );
