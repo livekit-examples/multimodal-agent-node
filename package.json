@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "dev": "node dist/agent.js dev",
-    "start": "node dist/agent.js start",
+    "dev": "tsc-watch --onSuccess \"node dist/agent.js dev\"",
+    "start": "tsc && node dist/agent.js start",
     "lint": "eslint -f unix \"**/*.ts\" --fix",
     "format": "prettier --write ."
   },
@@ -21,6 +21,7 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-prettier": "^5.2.1",
+    "tsc-watch": "^6.2.1",
     "typescript": "^5.6.3"
   },
   "dependencies": {

@@ -30,7 +30,7 @@ export default defineAgent({
           location: z.string().describe('The location to get the weather for'),
         }),
         execute: async ({ location }) => {
-          console.log('hey arti');
+          console.log('hey andrew');
           console.debug(`executing weather function for ${location}`);
           const response = await fetch(`https://wttr.in/${location}?format=%C+%t`);
           if (!response.ok) {
