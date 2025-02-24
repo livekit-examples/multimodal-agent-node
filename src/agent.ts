@@ -45,16 +45,20 @@ export default defineAgent({
       throw new Error('User ID is required');
     }
 
-    const {facts} = await zep.user.getFacts(user.userId);
+    const { facts } = await zep.user.getFacts(user.userId);
 
     console.log(facts);
 
     const model = new openai.realtime.RealtimeModel({
       instructions: `You are a helpful assistant.
-      
-      You're speaking with ${user.firstName ?? 'the user'}.
 
-      This is what you know about the user:
+      ${
+        user.firstName
+          ? `You're speaking with ${user.firstName}. Address them as such.`
+          : `You don't know the user's name, you should ask for it. So you can call them by their name in future conversations.`
+      }
+
+      ${facts?.length ? `This is what we know about the user:` : ''}
       ${facts?.map((fact) => `${fact.content}`).join('\n')}
       `,
     });
@@ -66,7 +70,6 @@ export default defineAgent({
           location: z.string().describe('The location to get the weather for'),
         }),
         execute: async ({ location }) => {
-          console.log('hey andrew');
           console.debug(`executing weather function for ${location}`);
           const response = await fetch(`https://wttr.in/${location}?format=%C+%t`);
           if (!response.ok) {
@@ -74,6 +77,22 @@ export default defineAgent({
           }
           const weather = await response.text();
           return `The weather in ${location} right now is ${weather}.`;
+        },
+      },
+      updateUserName: {
+        description: 'Called when the user provides or updates their name',
+        parameters: z.object({
+          firstName: z.string().describe("The user's first name"),
+        }),
+        execute: async ({ firstName }) => {
+          console.log('Saving user info to the database');
+          console.log(firstName);
+
+          await zep.user.update(user.userId!, {
+            firstName: firstName,
+          });
+
+          return `Thank you for providing your name.`;
         },
       },
     };
@@ -103,12 +122,12 @@ export default defineAgent({
       .start(ctx.room, participant)
       .then((session) => session as openai.realtime.RealtimeSession);
 
-    session.conversation.item.create(
-      llm.ChatMessage.create({
-        role: llm.ChatRole.SYSTEM,
-        text: `Try to ascertain the user's favourite pizza.`,
-      }),
-    );
+    // session.conversation.item.create(
+    //   llm.ChatMessage.create({
+    //     role: llm.ChatRole.SYSTEM,
+    //     text: `Hey, what's your favourite pizza?`,
+    //   }),
+    // );
 
     session.response.create();
   },
