@@ -7,7 +7,8 @@
     "build": "tsc",
     "dev": "node dist/agent.js dev",
     "start": "node dist/agent.js start",
-    "lint": "eslint -f unix \"**/*.ts\""
+    "lint": "eslint -f unix \"**/*.ts\" --fix",
+    "format": "prettier --write ."
   },
   "packageManager": "pnpm@9.2.0",
   "devDependencies": {
@@ -23,6 +24,7 @@
     "typescript": "^5.6.3"
   },
   "dependencies": {
+    "@getzep/zep-cloud": "^2.4.0",
     "@livekit/agents": "^0.6.4",
     "@livekit/agents-plugin-openai": "^0.8.1",
     "@livekit/rtc-node": "^0.13.3",
