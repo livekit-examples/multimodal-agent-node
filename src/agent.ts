@@ -5,7 +5,9 @@ import * as openai from '@livekit/agents-plugin-openai';
 import dotenv from 'dotenv';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { z } from 'zod';
+import { dialRelavantDepartmentDID } from './tools/dial-in-did';
+import { updateUserName } from './tools/update-user-name';
+import { weather } from './tools/weather';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const envPath = path.join(__dirname, '../.env.local');
@@ -40,7 +42,7 @@ export default defineAgent({
 
     console.log(`Starting assistant example agent for "${participant.identity}"`);
 
-    const user = await getOrAddZepUser(participant.identity);
+    const user = await getOrAddZepUser(process.env.FORCE_ZEP_IDENTITY ?? participant.identity);
 
     if (!user.userId) {
       throw new Error('User ID is required');
@@ -48,7 +50,7 @@ export default defineAgent({
 
     const { facts } = await zep.user.getFacts(user.userId);
 
-    console.log(facts);
+    console.log({ facts });
 
     const model = new openai.realtime.RealtimeModel({
       instructions: `You are a helpful assistant.
@@ -66,37 +68,9 @@ export default defineAgent({
     });
 
     const fncCtx: llm.FunctionContext = {
-      weather: {
-        description: 'Get the weather in a location',
-        parameters: z.object({
-          location: z.string().describe('The location to get the weather for'),
-        }),
-        execute: async ({ location }) => {
-          console.debug(`executing weather function for ${location}`);
-          const response = await fetch(`https://wttr.in/${location}?format=%C+%t`);
-          if (!response.ok) {
-            throw new Error(`Weather API returned status: ${response.status}`);
-          }
-          const weather = await response.text();
-          return `The weather in ${location} right now is ${weather}.`;
-        },
-      },
-      updateUserName: {
-        description: 'Called when the user provides or updates their name',
-        parameters: z.object({
-          firstName: z.string().describe("The user's first name"),
-        }),
-        execute: async ({ firstName }) => {
-          console.log('Saving user info to the database');
-          console.log(firstName);
-
-          await zep.user.update(user.userId!, {
-            firstName: firstName,
-          });
-
-          return `Thank you for providing your name.`;
-        },
-      },
+      weather: weather(zep, user),
+      dialRelavantDepartmentDID: dialRelavantDepartmentDID(zep, user),
+      updateUserName: updateUserName(zep, user),
     };
     const agent = new multimodal.MultimodalAgent({ model, fncCtx });
 
@@ -114,7 +88,7 @@ export default defineAgent({
       }
 
       await zep.graph.add({
-        userId: participant.identity,
+        userId: process.env.FORCE_ZEP_IDENTITY ?? participant.identity,
         type: 'message',
         data: message.content.toString(),
       });
