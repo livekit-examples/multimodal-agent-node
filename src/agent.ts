@@ -1,5 +1,6 @@
 import { Zep, ZepClient } from '@getzep/zep-cloud';
-import { type JobContext, WorkerOptions, cli, defineAgent, llm, multimodal } from '@livekit/agents';
+import type { llm } from '@livekit/agents';
+import { type JobContext, WorkerOptions, cli, defineAgent, multimodal } from '@livekit/agents';
 import * as openai from '@livekit/agents-plugin-openai';
 import dotenv from 'dotenv';
 import path from 'node:path';
@@ -61,6 +62,7 @@ export default defineAgent({
       ${facts?.length ? `This is what we know about the user:` : ''}
       ${facts?.map((fact) => `${fact.content}`).join('\n')}
       `,
+      voice: 'ballad',
     });
 
     const fncCtx: llm.FunctionContext = {
