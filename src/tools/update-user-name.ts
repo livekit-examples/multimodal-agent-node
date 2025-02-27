@@ -1,8 +1,8 @@
-import type { Zep, ZepClient } from '@getzep/zep-cloud';
-import type { CallableFunction } from '@livekit/agents/dist/llm';
 import { z } from 'zod';
+import { zep } from '../clients/zep.js';
+import type { Tool } from '../type.js';
 
-export const updateUserName = (zep: ZepClient, user: Zep.User): CallableFunction => ({
+export const updateUserName: Tool = (user) => ({
   description: 'Called when the user provides or updates their name',
   parameters: z.object({
     firstName: z.string().describe("The user's first name"),

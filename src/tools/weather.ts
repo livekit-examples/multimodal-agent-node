@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { Tool } from '../type';
+import type { Tool } from '../type.js';
 
 export const weather: Tool = () => ({
   description: 'Get the weather in a location',

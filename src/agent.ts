@@ -1,22 +1,18 @@
-import { Zep, ZepClient } from '@getzep/zep-cloud';
+import { Zep } from '@getzep/zep-cloud';
 import type { llm } from '@livekit/agents';
 import { type JobContext, WorkerOptions, cli, defineAgent, multimodal } from '@livekit/agents';
 import * as openai from '@livekit/agents-plugin-openai';
 import dotenv from 'dotenv';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { dialRelavantDepartmentDID } from './tools/dial-in-did';
-import { updateUserName } from './tools/update-user-name';
-import { weather } from './tools/weather';
+import { zep } from './clients/zep.js';
+import { dialRelavantDepartmentDID } from './tools/dial-in-did.js';
+import { updateUserName } from './tools/update-user-name.js';
+import { weather } from './tools/weather.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const envPath = path.join(__dirname, '../.env.local');
 dotenv.config({ path: envPath });
-
-const API_KEY = process.env.ZEP_API_KEY;
-const zep = new ZepClient({ apiKey: API_KEY });
-
-// Functions
 
 const getOrAddZepUser = async (userId: string) => {
   try {
@@ -50,8 +46,6 @@ export default defineAgent({
 
     const { facts } = await zep.user.getFacts(user.userId);
 
-    console.log({ facts });
-
     const model = new openai.realtime.RealtimeModel({
       instructions: `You are a helpful assistant.
 
@@ -68,9 +62,9 @@ export default defineAgent({
     });
 
     const fncCtx: llm.FunctionContext = {
-      weather: weather(zep, user),
-      dialRelavantDepartmentDID: dialRelavantDepartmentDID(zep, user),
-      updateUserName: updateUserName(zep, user),
+      weather: weather(user, ctx, participant),
+      dialRelavantDepartmentDID: dialRelavantDepartmentDID(user, ctx, participant),
+      updateUserName: updateUserName(user, ctx, participant),
     };
     const agent = new multimodal.MultimodalAgent({ model, fncCtx });
 
