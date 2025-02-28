@@ -1,4 +1,3 @@
-import { Zep } from '@getzep/zep-cloud';
 import type { llm } from '@livekit/agents';
 import { type JobContext, WorkerOptions, cli, defineAgent, multimodal } from '@livekit/agents';
 import * as openai from '@livekit/agents-plugin-openai';
@@ -6,26 +5,15 @@ import dotenv from 'dotenv';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { zep } from './clients/zep.js';
-import { dialRelavantDepartmentDID } from './tools/dial-in-did.js';
+import { getOrAddZepUser, tools } from './lib/index.js';
+import { dialRelavantDepartment } from './tools/dial-in-department.js';
+import { getDataFromZep } from './tools/get-data-from-zep.js';
 import { updateUserName } from './tools/update-user-name.js';
 import { weather } from './tools/weather.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const envPath = path.join(__dirname, '../.env.local');
 dotenv.config({ path: envPath });
-
-const getOrAddZepUser = async (userId: string) => {
-  try {
-    return await zep.user.get(userId);
-  } catch (error) {
-    if (error instanceof Zep.NotFoundError) {
-      return await zep.user.add({
-        userId: userId,
-      });
-    }
-    throw error;
-  }
-};
 
 export default defineAgent({
   entry: async (ctx: JobContext) => {
@@ -47,7 +35,7 @@ export default defineAgent({
     const { facts } = await zep.user.getFacts(user.userId);
 
     const model = new openai.realtime.RealtimeModel({
-      instructions: `You are a helpful assistant.
+      instructions: `You are a helpful assistant and specialize in helping customers with delivery, takeaway and instore purchaing services.
 
       ${
         user.firstName
@@ -61,11 +49,13 @@ export default defineAgent({
       voice: 'ballad',
     });
 
-    const fncCtx: llm.FunctionContext = {
-      weather: weather(user, ctx, participant),
-      dialRelavantDepartmentDID: dialRelavantDepartmentDID(user, ctx, participant),
-      updateUserName: updateUserName(user, ctx, participant),
-    };
+    const fncCtx: llm.FunctionContext = tools([user, ctx, participant])({
+      weather,
+      dialRelavantDepartment,
+      updateUserName,
+      getDataFromZep,
+    });
+
     const agent = new multimodal.MultimodalAgent({ model, fncCtx });
 
     agent.on('agent_speech_committed', (message: llm.ChatMessage) => {
@@ -91,13 +81,6 @@ export default defineAgent({
     const session = await agent
       .start(ctx.room, participant)
       .then((session) => session as openai.realtime.RealtimeSession);
-
-    // session.conversation.item.create(
-    //   llm.ChatMessage.create({
-    //     role: llm.ChatRole.SYSTEM,
-    //     text: `Hey, what's your favourite pizza?`,
-    //   }),
-    // );
 
     session.response.create();
   },

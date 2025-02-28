@@ -23,11 +23,9 @@ const dialDepartment = async (
     participant.identity, // Identity of the SIP participant that should be transferred.
     DEPT_SIP_MAP[department], // transfer_to, tel:+15105550100 sip:+15105550100@sip.telnyx.com
   );
-
-  console.log('Dialign dept ', DEPT_SIP_MAP[department]);
 };
 
-export const dialRelavantDepartmentDID: Tool = (user, ctx, participant) => ({
+export const dialRelavantDepartment: Tool = (user, ctx, participant) => ({
   description: `Called when the user wants assistance from a specific department 
         
         The possible departments are:
@@ -40,6 +38,11 @@ export const dialRelavantDepartmentDID: Tool = (user, ctx, participant) => ({
   }),
   execute: async ({ department }) => {
     console.debug(`executing dialRelavantDepartmentDID function for ${department}`);
-    return dialDepartment(department, ctx, participant);
+    try {
+      return dialDepartment(department, ctx, participant);
+    } catch (error) {
+      console.log('Error dialing dept: ', department, error);
+      return `Error dialing repartment`;
+    }
   },
 });
