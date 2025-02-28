@@ -1,32 +1,19 @@
-import { Zep, ZepClient } from '@getzep/zep-cloud';
-import { type JobContext, WorkerOptions, cli, defineAgent, llm, multimodal } from '@livekit/agents';
+import type { llm } from '@livekit/agents';
+import { type JobContext, WorkerOptions, cli, defineAgent, multimodal } from '@livekit/agents';
 import * as openai from '@livekit/agents-plugin-openai';
 import dotenv from 'dotenv';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { z } from 'zod';
+import { zep } from './clients/zep.js';
+import { getOrAddZepUser, tools } from './lib/index.js';
+import { dialRelavantDepartment } from './tools/dial-in-department.js';
+import { getDataFromZep } from './tools/get-data-from-zep.js';
+import { updateUserName } from './tools/update-user-name.js';
+import { weather } from './tools/weather.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const envPath = path.join(__dirname, '../.env.local');
 dotenv.config({ path: envPath });
-
-const API_KEY = process.env.ZEP_API_KEY;
-const zep = new ZepClient({ apiKey: API_KEY });
-
-// Functions
-
-const getOrAddZepUser = async (userId: string) => {
-  try {
-    return await zep.user.get(userId);
-  } catch (error) {
-    if (error instanceof Zep.NotFoundError) {
-      return await zep.user.add({
-        userId: userId,
-      });
-    }
-    throw error;
-  }
-};
 
 export default defineAgent({
   entry: async (ctx: JobContext) => {
@@ -39,7 +26,7 @@ export default defineAgent({
 
     console.log(`Starting assistant example agent for "${participant.identity}"`);
 
-    const user = await getOrAddZepUser(participant.identity);
+    const user = await getOrAddZepUser(process.env.FORCE_ZEP_IDENTITY ?? participant.identity);
 
     if (!user.userId) {
       throw new Error('User ID is required');
@@ -47,10 +34,8 @@ export default defineAgent({
 
     const { facts } = await zep.user.getFacts(user.userId);
 
-    console.log(facts);
-
     const model = new openai.realtime.RealtimeModel({
-      instructions: `You are a helpful assistant.
+      instructions: `You are a helpful assistant and specialize in helping customers with delivery, takeaway and instore purchaing services.
 
       ${
         user.firstName
@@ -61,41 +46,16 @@ export default defineAgent({
       ${facts?.length ? `This is what we know about the user:` : ''}
       ${facts?.map((fact) => `${fact.content}`).join('\n')}
       `,
+      voice: 'ballad',
     });
 
-    const fncCtx: llm.FunctionContext = {
-      weather: {
-        description: 'Get the weather in a location',
-        parameters: z.object({
-          location: z.string().describe('The location to get the weather for'),
-        }),
-        execute: async ({ location }) => {
-          console.debug(`executing weather function for ${location}`);
-          const response = await fetch(`https://wttr.in/${location}?format=%C+%t`);
-          if (!response.ok) {
-            throw new Error(`Weather API returned status: ${response.status}`);
-          }
-          const weather = await response.text();
-          return `The weather in ${location} right now is ${weather}.`;
-        },
-      },
-      updateUserName: {
-        description: 'Called when the user provides or updates their name',
-        parameters: z.object({
-          firstName: z.string().describe("The user's first name"),
-        }),
-        execute: async ({ firstName }) => {
-          console.log('Saving user info to the database');
-          console.log(firstName);
+    const fncCtx: llm.FunctionContext = tools([user, ctx, participant])({
+      weather,
+      dialRelavantDepartment,
+      updateUserName,
+      getDataFromZep,
+    });
 
-          await zep.user.update(user.userId!, {
-            firstName: firstName,
-          });
-
-          return `Thank you for providing your name.`;
-        },
-      },
-    };
     const agent = new multimodal.MultimodalAgent({ model, fncCtx });
 
     agent.on('agent_speech_committed', (message: llm.ChatMessage) => {
@@ -112,7 +72,7 @@ export default defineAgent({
       }
 
       await zep.graph.add({
-        userId: participant.identity,
+        userId: process.env.FORCE_ZEP_IDENTITY ?? participant.identity,
         type: 'message',
         data: message.content.toString(),
       });
@@ -121,13 +81,6 @@ export default defineAgent({
     const session = await agent
       .start(ctx.room, participant)
       .then((session) => session as openai.realtime.RealtimeSession);
-
-    // session.conversation.item.create(
-    //   llm.ChatMessage.create({
-    //     role: llm.ChatRole.SYSTEM,
-    //     text: `Hey, what's your favourite pizza?`,
-    //   }),
-    // );
 
     session.response.create();
   },
