@@ -10,13 +10,13 @@ importers:
     dependencies:
       '@livekit/agents':
         specifier: ^0.6.4
-        version: 0.6.4(@livekit/rtc-node@0.13.3)
+        version: 0.6.4(@livekit/rtc-node@0.13.6)
       '@livekit/agents-plugin-openai':
         specifier: ^0.8.1
-        version: 0.8.2(@livekit/agents@0.6.4(@livekit/rtc-node@0.13.3))(@livekit/rtc-node@0.13.3)(zod@3.23.8)
+        version: 0.8.2(@livekit/agents@0.6.4(@livekit/rtc-node@0.13.6))(@livekit/rtc-node@0.13.6)(zod@3.23.8)
       '@livekit/rtc-node':
         specifier: ^0.13.3
-        version: 0.13.3
+        version: 0.13.6
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
@@ -299,38 +299,38 @@ packages:
   '@livekit/protocol@1.30.0':
     resolution: {integrity: sha512-SDI9ShVKj8N3oOSinr8inaxD3FXgmgoJlqN35uU/Yx1sdoDeQbzAuBFox7bYjM+VhnZ1V22ivIDjAsKr00H+XQ==}
 
-  '@livekit/rtc-node-darwin-arm64@0.13.3':
-    resolution: {integrity: sha512-IP3zlhc434jkucNW6k1PpE+nOFfnXnpSJbFBmZz8tHBmLhJ1R+unVQ2gOtBTsIINhNbB+BG+xJQovw3uKrProQ==}
+  '@livekit/rtc-node-darwin-arm64@0.13.6':
+    resolution: {integrity: sha512-LGgonVzcvzoZKyyseGNDvBvZh93ARurPnHoAjiVPX6mqjPliTM4rooIMZBOPqWHH/PPl0BX7ZgAMr820HSZGpg==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
 
-  '@livekit/rtc-node-darwin-x64@0.13.3':
-    resolution: {integrity: sha512-yfBsqPiefMO70Xfo9/zUoz2iVzr41Uym87i5GiOHkS+5KWlEvJsb90ZeDBpOIneVK3xAtHpmD6xmGehehD6g9w==}
+  '@livekit/rtc-node-darwin-x64@0.13.6':
+    resolution: {integrity: sha512-2pSJwW5/pYd0MQPJH4Dk/nwoV2J+qMF673HNR4ptDqM0TdkIn1oPYpecneL/Y9cjOdOF4pmZerrxnZDP+M18XQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
 
-  '@livekit/rtc-node-linux-arm64-gnu@0.13.3':
-    resolution: {integrity: sha512-eToknIUYXCoVj9rIgJmwn5pEAA8TQv+2mWOe6Kd28YupNQMExP5IWgYBjY5V/KYIJbbwqU5xymoGIekC2gr+iA==}
+  '@livekit/rtc-node-linux-arm64-gnu@0.13.6':
+    resolution: {integrity: sha512-bbaiPhpRr13O09XFviUtDNipj91CgWomo4c3jm3RvDmn+JrTaRuEw/Hdo94h+ymEiVBqmVZZ7VfSpO2NEGlRBQ==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
 
-  '@livekit/rtc-node-linux-x64-gnu@0.13.3':
-    resolution: {integrity: sha512-NTwD+8bQkHr51HvWjNlusTNIsQ/EExZGYpyJd/bT5MvpcDJ8SyXafgNAyY1JvEU1xvsLG2K7ysSAXX6oA4e/EA==}
+  '@livekit/rtc-node-linux-x64-gnu@0.13.6':
+    resolution: {integrity: sha512-hF563YR4ojXkmVpR4kFbGTxoHkmHsApQrzHOSqT0Y6aJlNcdCt/2hfGnBkbBa9wrNPGmLw8odWOo/hXD7g131Q==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
 
-  '@livekit/rtc-node-win32-x64-msvc@0.13.3':
-    resolution: {integrity: sha512-cRCPMS15ZA2764SnK5wH9CInb3vK92gbHmRBR6F+uzxuGL3+NBjGnSQLzf5rT3HnPk1vZWMEVxX84dVJxp3wPQ==}
+  '@livekit/rtc-node-win32-x64-msvc@0.13.6':
+    resolution: {integrity: sha512-vadjSNwo79hKUw/VnttPStMIU/n9Fmu1JZ9YiQhLqWKKlQNlnTskj5hQNkZQ8VJjkZnMLbgCOWVEut8LcK+DJw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
 
-  '@livekit/rtc-node@0.13.3':
-    resolution: {integrity: sha512-S091L/AIduMNxlBn5ey/PmuMnl/dV+LoS85YJ0EjAYJiPO2i8WYeXQTDBAsUgZSCJeTniEdgyHGUSCBCsYdQbQ==}
+  '@livekit/rtc-node@0.13.6':
+    resolution: {integrity: sha512-dxAwfl5n8CcxThhF/94I/a+xLKBfJr7hU8nb/Y/3nI+drVHLxU1Bx8uG2We9sVUT29Z7KriaWyFa5Fx2a7NuyA==}
     engines: {node: '>= 18'}
 
   '@livekit/typed-emitter@3.0.0':
@@ -1313,11 +1313,22 @@ packages:
     resolution: {integrity: sha512-oXwn7ICywaZPHmu3epHGU2oJX4nPmKvHvB/bwrJHlGcbEWaVcotkpyVHMKLKmiVryWYByNp0jpgAcXpFJDXJzA==}
     hasBin: true
 
+  pino-pretty@13.0.0:
+    resolution: {integrity: sha512-cQBBIVG3YajgoUjo1FdKVRX6t9XPxwB9lcNJVD5GCnNM4Y6T12YYx8c6zEejxQsU0wrg9TwmDulcE9LR7qcJqA==}
+    hasBin: true
+
   pino-std-serializers@6.2.2:
     resolution: {integrity: sha512-cHjPPsE+vhj/tnhCy/wiMh3M3z3h/j15zHQX+S9GkTBgqJuTuJzYJ4gUyACLhDaJ7kk9ba9iRDmbH2tJU03OiA==}
 
+  pino-std-serializers@7.0.0:
+    resolution: {integrity: sha512-e906FRY0+tV27iq4juKzSYPbUj2do2X2JX4EzSca1631EB2QJQUqGbDuERal7LCtOpxl6x3+nvo9NPZcmjkiFA==}
+
   pino@8.21.0:
     resolution: {integrity: sha512-ip4qdzjkAyDDZklUaZkcRFb2iA118H9SgRh8yzTkSQK8HilsOJF7rSY8HoW5+I0M46AZgX/pxbprf2vvzQCE0Q==}
+    hasBin: true
+
+  pino@9.6.0:
+    resolution: {integrity: sha512-i85pKRCt4qMjZ1+L7sy2Ag4t1atFcdbEt76+7iRJn1g2BvsnRMGu9p8pivl9fs63M2kF/A0OacFZhTub+m/qMg==}
     hasBin: true
 
   possible-typed-array-names@1.0.0:
@@ -1339,6 +1350,9 @@ packages:
 
   process-warning@3.0.0:
     resolution: {integrity: sha512-mqn0kFRl0EoqhnL0GQ0veqFHyIN1yig9RHh/InzORTUiZHFRAur+aMtRkELNwGs9aNwKS6tg/An4NYBPGwvtzQ==}
+
+  process-warning@4.0.1:
+    resolution: {integrity: sha512-3c2LzQ3rY9d0hc1emcsHhfT9Jwz0cChib/QN89oME2R451w5fy3f0afAhERFZAwrbDU43wk12d0ORBpDVME50Q==}
 
   process@0.11.10:
     resolution: {integrity: sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==}
@@ -1504,6 +1518,9 @@ packages:
 
   thread-stream@2.7.0:
     resolution: {integrity: sha512-qQiRWsU/wvNolI6tbbCKd9iKaTnCXsTwVxhhKM6nctPdujTyztjlbUkUTUymidWcMnZ5pWR0ej4a0tjsW021vw==}
+
+  thread-stream@3.1.0:
+    resolution: {integrity: sha512-OqyPZ9u96VohAyMfJykzmivOrY2wfMSf3C5TtFJVgN+Hm6aj+voFhlK+kZEIv2FBh1X6Xp3DlnCOfEQ3B2J86A==}
 
   to-fast-properties@2.0.0:
     resolution: {integrity: sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog==}
@@ -1867,10 +1884,10 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@livekit/agents-plugin-openai@0.8.2(@livekit/agents@0.6.4(@livekit/rtc-node@0.13.3))(@livekit/rtc-node@0.13.3)(zod@3.23.8)':
+  '@livekit/agents-plugin-openai@0.8.2(@livekit/agents@0.6.4(@livekit/rtc-node@0.13.6))(@livekit/rtc-node@0.13.6)(zod@3.23.8)':
     dependencies:
-      '@livekit/agents': 0.6.4(@livekit/rtc-node@0.13.3)
-      '@livekit/rtc-node': 0.13.3
+      '@livekit/agents': 0.6.4(@livekit/rtc-node@0.13.6)
+      '@livekit/rtc-node': 0.13.6
       openai: 4.86.1(ws@8.18.1)(zod@3.23.8)
       sharp: 0.33.5
       ws: 8.18.1
@@ -1880,11 +1897,11 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@livekit/agents@0.6.4(@livekit/rtc-node@0.13.3)':
+  '@livekit/agents@0.6.4(@livekit/rtc-node@0.13.6)':
     dependencies:
       '@livekit/mutex': 1.1.1
       '@livekit/protocol': 1.30.0
-      '@livekit/rtc-node': 0.13.3
+      '@livekit/rtc-node': 0.13.6
       '@livekit/typed-emitter': 3.0.0
       commander: 12.1.0
       livekit-server-sdk: 2.9.4
@@ -1902,32 +1919,34 @@ snapshots:
     dependencies:
       '@bufbuild/protobuf': 1.10.0
 
-  '@livekit/rtc-node-darwin-arm64@0.13.3':
+  '@livekit/rtc-node-darwin-arm64@0.13.6':
     optional: true
 
-  '@livekit/rtc-node-darwin-x64@0.13.3':
+  '@livekit/rtc-node-darwin-x64@0.13.6':
     optional: true
 
-  '@livekit/rtc-node-linux-arm64-gnu@0.13.3':
+  '@livekit/rtc-node-linux-arm64-gnu@0.13.6':
     optional: true
 
-  '@livekit/rtc-node-linux-x64-gnu@0.13.3':
+  '@livekit/rtc-node-linux-x64-gnu@0.13.6':
     optional: true
 
-  '@livekit/rtc-node-win32-x64-msvc@0.13.3':
+  '@livekit/rtc-node-win32-x64-msvc@0.13.6':
     optional: true
 
-  '@livekit/rtc-node@0.13.3':
+  '@livekit/rtc-node@0.13.6':
     dependencies:
       '@bufbuild/protobuf': 1.10.0
       '@livekit/mutex': 1.1.1
       '@livekit/typed-emitter': 3.0.0
+      pino: 9.6.0
+      pino-pretty: 13.0.0
     optionalDependencies:
-      '@livekit/rtc-node-darwin-arm64': 0.13.3
-      '@livekit/rtc-node-darwin-x64': 0.13.3
-      '@livekit/rtc-node-linux-arm64-gnu': 0.13.3
-      '@livekit/rtc-node-linux-x64-gnu': 0.13.3
-      '@livekit/rtc-node-win32-x64-msvc': 0.13.3
+      '@livekit/rtc-node-darwin-arm64': 0.13.6
+      '@livekit/rtc-node-darwin-x64': 0.13.6
+      '@livekit/rtc-node-linux-arm64-gnu': 0.13.6
+      '@livekit/rtc-node-linux-x64-gnu': 0.13.6
+      '@livekit/rtc-node-win32-x64-msvc': 0.13.6
 
   '@livekit/typed-emitter@3.0.0': {}
 
@@ -3032,7 +3051,25 @@ snapshots:
       sonic-boom: 4.2.0
       strip-json-comments: 3.1.1
 
+  pino-pretty@13.0.0:
+    dependencies:
+      colorette: 2.0.20
+      dateformat: 4.6.3
+      fast-copy: 3.0.2
+      fast-safe-stringify: 2.1.1
+      help-me: 5.0.0
+      joycon: 3.1.1
+      minimist: 1.2.8
+      on-exit-leak-free: 2.1.2
+      pino-abstract-transport: 2.0.0
+      pump: 3.0.2
+      secure-json-parse: 2.7.0
+      sonic-boom: 4.2.0
+      strip-json-comments: 3.1.1
+
   pino-std-serializers@6.2.2: {}
+
+  pino-std-serializers@7.0.0: {}
 
   pino@8.21.0:
     dependencies:
@@ -3048,6 +3085,20 @@ snapshots:
       sonic-boom: 3.8.1
       thread-stream: 2.7.0
 
+  pino@9.6.0:
+    dependencies:
+      atomic-sleep: 1.0.0
+      fast-redact: 3.5.0
+      on-exit-leak-free: 2.1.2
+      pino-abstract-transport: 2.0.0
+      pino-std-serializers: 7.0.0
+      process-warning: 4.0.1
+      quick-format-unescaped: 4.0.4
+      real-require: 0.2.0
+      safe-stable-stringify: 2.5.0
+      sonic-boom: 4.2.0
+      thread-stream: 3.1.0
+
   possible-typed-array-names@1.0.0: {}
 
   prelude-ls@1.2.1: {}
@@ -3059,6 +3110,8 @@ snapshots:
   prettier@3.3.3: {}
 
   process-warning@3.0.0: {}
+
+  process-warning@4.0.1: {}
 
   process@0.11.10: {}
 
@@ -3249,6 +3302,10 @@ snapshots:
   text-table@0.2.0: {}
 
   thread-stream@2.7.0:
+    dependencies:
+      real-require: 0.2.0
+
+  thread-stream@3.1.0:
     dependencies:
       real-require: 0.2.0
 
