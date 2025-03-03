@@ -1,31 +1,43 @@
 import type { JobContext } from '@livekit/agents';
-import type { RemoteParticipant } from '@livekit/rtc-node';
 import { z } from 'zod';
 import { sip } from '../clients/sip.js';
 import type { Tool } from '../type.js';
 
-const zDepartment = z.enum(['SALES', 'CUSTOMER_SUPPORT']).describe('The department name');
+const SIP_PARTICIPANTS = {
+  SALES: {
+    sipTrunkId: 'ST_MiSwKTmB6QBQ', // sip trunk to use for the call
+    number: '+442037951838', // number to dial,
+    participantIdentity: 'SALES_TEAM',
+    participantName: 'Sales Team',
+  },
+  SUPPORT: {
+    sipTrunkId: 'ST_GvmEnMvCkWtR', // sip trunk to use for the call
+    number: '+447771902752', // number to dial
+    participantIdentity: 'SUPPORT_TEAM',
+    participantName: 'Support Team',
+  },
+};
+
+const zDepartment = z.enum(['SALES', 'SUPPORT']).describe('The department name');
 
 type Department = z.infer<typeof zDepartment>;
 
-const DEPT_SIP_MAP: Record<Department, string> = {
-  SALES: 'tel:+9779824920593',
-  CUSTOMER_SUPPORT: 'tel:+15105550100',
-};
-
-const dialDepartment = async (
-  department: Department,
-  ctx: JobContext,
-  participant: RemoteParticipant,
-) => {
-  await sip.transferSipParticipant(
-    ctx.room.name ?? '', // source room
-    participant.identity, // Identity of the SIP participant that should be transferred.
-    DEPT_SIP_MAP[department], // transfer_to, tel:+15105550100 sip:+15105550100@sip.telnyx.com
+const dialDepartment = async (department: Department, ctx: JobContext) => {
+  const sipParticipant = SIP_PARTICIPANTS[department];
+  await sip.createSipParticipant(
+    sipParticipant.sipTrunkId,
+    sipParticipant.number,
+    ctx.room.name ?? '',
+    {
+      playDialtone: true,
+      krispEnabled: true,
+      participantIdentity: sipParticipant.participantIdentity,
+      participantName: sipParticipant.participantName,
+    },
   );
 };
 
-export const dialRelavantDepartment: Tool = (user, ctx, participant) => ({
+export const dialRelavantDepartment: Tool = (user, ctx) => ({
   description: `Called when the user wants assistance from a specific department 
         
         The possible departments are:
@@ -39,7 +51,8 @@ export const dialRelavantDepartment: Tool = (user, ctx, participant) => ({
   execute: async ({ department }) => {
     console.debug(`executing dialRelavantDepartmentDID function for ${department}`);
     try {
-      return dialDepartment(department, ctx, participant);
+      await dialDepartment(department, ctx);
+      return `Calling ${department} now.`;
     } catch (error) {
       console.log('Error dialing dept: ', department, error);
       return `Error dialing repartment`;
