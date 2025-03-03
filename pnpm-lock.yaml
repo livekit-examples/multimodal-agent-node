@@ -9,11 +9,11 @@ importers:
   .:
     dependencies:
       '@livekit/agents':
-        specifier: ^0.6.4
-        version: 0.6.4(@livekit/rtc-node@0.13.6)
+        specifier: ^0.7.0
+        version: 0.7.0(@livekit/rtc-node@0.13.6)
       '@livekit/agents-plugin-openai':
         specifier: ^0.8.1
-        version: 0.8.2(@livekit/agents@0.6.4(@livekit/rtc-node@0.13.6))(@livekit/rtc-node@0.13.6)(zod@3.23.8)
+        version: 0.8.2(@livekit/agents@0.7.0(@livekit/rtc-node@0.13.6))(@livekit/rtc-node@0.13.6)(zod@3.23.8)
       '@livekit/rtc-node':
         specifier: ^0.13.3
         version: 0.13.6
@@ -288,10 +288,10 @@ packages:
       '@livekit/agents': ^0.7.0x
       '@livekit/rtc-node': ^0.13.4
 
-  '@livekit/agents@0.6.4':
-    resolution: {integrity: sha512-QQJJAUG07hHXbKfgtMUTE7T4xiTdmEgCk0ri/i4qXUKPpl5lb37ic0EvQkfbL+KIaajNvy/bph+Z2iGqUMTQYw==}
+  '@livekit/agents@0.7.0':
+    resolution: {integrity: sha512-rK9exP/NCGij8W5qNB3ceAOQ8N87z35vq/IOecC4zdFyTYFLmWo0QbO9I9+E6ZGAV8j/GzVxJJkyRpUUJuh9yg==}
     peerDependencies:
-      '@livekit/rtc-node': ^0.13.2
+      '@livekit/rtc-node': ^0.13.4
 
   '@livekit/mutex@1.1.1':
     resolution: {integrity: sha512-EsshAucklmpuUAfkABPxJNhzj9v2sG7JuzFDL4ML1oJQSV14sqrpTYnsaOudMAw9yOaW53NU3QQTlUQoRs4czw==}
@@ -1609,18 +1609,6 @@ packages:
   wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
 
-  ws@8.18.0:
-    resolution: {integrity: sha512-8VbfWfHLbbwu3+N6OKsOMpBdT4kXPDDB9cJk2bJ6mh9ucxdlnNvH1e+roYkKmN9Nxw2yjz7VzeO9oOz2zJ04Pw==}
-    engines: {node: '>=10.0.0'}
-    peerDependencies:
-      bufferutil: ^4.0.1
-      utf-8-validate: '>=5.0.2'
-    peerDependenciesMeta:
-      bufferutil:
-        optional: true
-      utf-8-validate:
-        optional: true
-
   ws@8.18.1:
     resolution: {integrity: sha512-RKW2aJZMXeMxVpnZ6bck+RswznaxmzdULiBr6KY7XkTnW8uvt0iT9H5DkHUChXrc+uurzwa0rVI16n/Xzjdz1w==}
     engines: {node: '>=10.0.0'}
@@ -1868,9 +1856,9 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@livekit/agents-plugin-openai@0.8.2(@livekit/agents@0.6.4(@livekit/rtc-node@0.13.6))(@livekit/rtc-node@0.13.6)(zod@3.23.8)':
+  '@livekit/agents-plugin-openai@0.8.2(@livekit/agents@0.7.0(@livekit/rtc-node@0.13.6))(@livekit/rtc-node@0.13.6)(zod@3.23.8)':
     dependencies:
-      '@livekit/agents': 0.6.4(@livekit/rtc-node@0.13.6)
+      '@livekit/agents': 0.7.0(@livekit/rtc-node@0.13.6)
       '@livekit/rtc-node': 0.13.6
       openai: 4.86.1(ws@8.18.1)(zod@3.23.8)
       sharp: 0.33.5
@@ -1881,7 +1869,7 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@livekit/agents@0.6.4(@livekit/rtc-node@0.13.6)':
+  '@livekit/agents@0.7.0(@livekit/rtc-node@0.13.6)':
     dependencies:
       '@livekit/mutex': 1.1.1
       '@livekit/protocol': 1.30.0
@@ -1891,7 +1879,7 @@ snapshots:
       livekit-server-sdk: 2.9.4
       pino: 8.21.0
       pino-pretty: 11.3.0
-      ws: 8.18.0
+      ws: 8.18.1
       zod: 3.23.8
     transitivePeerDependencies:
       - bufferutil
@@ -3395,8 +3383,6 @@ snapshots:
   word-wrap@1.2.5: {}
 
   wrappy@1.0.2: {}
-
-  ws@8.18.0: {}
 
   ws@8.18.1: {}
 
