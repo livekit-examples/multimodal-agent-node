@@ -11,7 +11,7 @@ const SIP_PARTICIPANTS = {
     participantName: 'Sales Team',
   },
   SUPPORT: {
-    sipTrunkId: 'ST_GvmEnMvCkWtR', // sip trunk to use for the call
+    sipTrunkId: 'ST_MiSwKTmB6QBQ', // sip trunk to use for the call
     number: '+447771902752', // number to dial
     participantIdentity: 'SUPPORT_TEAM',
     participantName: 'Support Team',
