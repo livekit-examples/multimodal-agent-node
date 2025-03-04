@@ -32,9 +32,13 @@ export const getOrAddZepUser = async (userId: string) => {
   }
 };
 
-export const tools = (x: Parameters<Tool>) => (params: Record<string, Tool>) => {
-  const returnValue = Object.entries(params).map(([toolKey, tool]) => {
-    return { [toolKey]: tool(...x) };
-  });
-  return Object.assign({}, ...returnValue);
+export const tools = (...x: Parameters<Tool>) => {
+  return {
+    build: (params: Record<string, Tool>) => {
+      const returnValue = Object.entries(params).map(([toolKey, tool]) => {
+        return { [toolKey]: tool(...x) };
+      });
+      return Object.assign({}, ...returnValue);
+    },
+  };
 };

@@ -43,13 +43,23 @@ export default defineAgent({
           : `You don't know the user's name, you should ask for it. So you can call them by their name in future conversations.`
       }
 
-      ${facts?.length ? `This is what we know about the user:` : ''}
-      ${facts?.map((fact) => `${fact.content}`).join('\n')}
+
+      ${
+        facts?.length
+          ? `This is what we know about the user. 
+             Use this information to create context for the conversation. 
+             Do not give responses to user based on these facts unless user brings something up that could be related to these facts.
+             Do not call tools or functions during startup unless user wants you to do so.
+             `
+          : ''
+      }
+      ${facts?.map((fact) => `${fact.content}`).join('\n')}  
       `,
+
       voice: 'ballad',
     });
 
-    const fncCtx: llm.FunctionContext = tools([user, ctx, participant])({
+    const fncCtx: llm.FunctionContext = tools(user, ctx, participant).build({
       weather,
       dialRelavantDepartment,
       updateUserName,
