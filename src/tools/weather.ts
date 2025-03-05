@@ -9,7 +9,7 @@ export const getUsersLocation = async (sessionId: string) => {
   const result = await zep.memory.extract(
     sessionId,
     {
-      location: zepFields.text('The location user last checked weather for'),
+      location: zepFields.text('Location user last checked the weather for'),
     },
     {
       lastN: 100, // The number of messages in the chat history from which to extract data,

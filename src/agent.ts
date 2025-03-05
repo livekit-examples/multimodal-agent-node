@@ -111,9 +111,9 @@ export default defineAgent({
       limit: 100,
     });
 
-    const userFacts = await zep.user.getFacts(user.userId);
+    // const userFacts = await zep.user.getFacts(user.userId);
 
-    console.log({ facts: userFacts.facts });
+    // console.log({ facts: userFacts.facts });
 
     const model = new openai.realtime.RealtimeModel({
       instructions: `You are a helpful assistant and specialize in helping customers with delivery, takeaway and instore purchaing services.      
@@ -122,9 +122,8 @@ export default defineAgent({
           ? `You're speaking with ${user.firstName}. Address them as such.`
           : `You don't know the user's name, you should ask for it. So you can call them by their name in future conversations.`
       }
-      
-      ${userFacts.facts?.length ? `You know ${userFacts.facts.join(', ')} about the user` : ''}
       `,
+      // ${userFacts.facts?.length ? `You know ${userFacts.facts.map((f) => f.content).join(', ')} about the user` : ''}
 
       voice: 'ballad',
     });
