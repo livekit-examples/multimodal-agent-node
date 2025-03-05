@@ -9,8 +9,8 @@
     "start": "tsc && node dist/agent.js start",
     "lint": "eslint -f unix \"**/*.ts\" --fix",
     "format": "prettier --write .",
-    "zep:delete-users": "npx tsx src/scripts/zep/delete-users.ts",
-    "zep:list-users": "npx tsx src/scripts/zep/list-users.ts",
+    "zep:delete-users": "tsx src/scripts/zep/delete-users.ts",
+    "zep:list-users": "tsx src/scripts/zep/list-users.ts",
     "populate-graph-1": "tsc && node dist/scripts/populate-graph-1.js",
     "populate-graph-2": "tsc && node dist/scripts/populate-graph-2.js"
   },
@@ -26,6 +26,7 @@
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-prettier": "^5.2.1",
     "tsc-watch": "^6.2.1",
+    "tsx": "^4.19.3",
     "typescript": "^5.6.3"
   },
   "dependencies": {
