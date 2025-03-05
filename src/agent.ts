@@ -106,22 +106,30 @@ export default defineAgent({
     }
 
     console.log('sessionId', zepSession.sessionId);
-    const sessionMessages = await zep.memory.getSessionMessages(zepSession.sessionId);
-    console.log(sessionMessages);
-    const model = new openai.realtime.RealtimeModel({
-      instructions: `You are a helpful assistant and specialize in helping customers with delivery, takeaway and instore purchaing services.
 
+    const sessionMessages = await zep.memory.getSessionMessages(zepSession.sessionId, {
+      limit: 100,
+    });
+
+    const userFacts = await zep.user.getFacts(user.userId);
+
+    console.log({ facts: userFacts.facts });
+
+    const model = new openai.realtime.RealtimeModel({
+      instructions: `You are a helpful assistant and specialize in helping customers with delivery, takeaway and instore purchaing services.      
       ${
         user.firstName
           ? `You're speaking with ${user.firstName}. Address them as such.`
           : `You don't know the user's name, you should ask for it. So you can call them by their name in future conversations.`
       }
+      
+      ${userFacts.facts?.length ? `You know ${userFacts.facts.join(', ')} about the user` : ''}
       `,
 
       voice: 'ballad',
     });
 
-    const fncCtx: llm.FunctionContext = tools(user, ctx, participant).build({
+    const fncCtx: llm.FunctionContext = tools(user, ctx, participant, zepSession).build({
       weather,
       dialRelavantDepartment,
       updateUserName,
@@ -133,13 +141,16 @@ export default defineAgent({
     sessionMessages.messages?.forEach((message) => {
       chatCtx.append({
         role: zepRoleToChatRole(message.roleType),
-        text: message.content.toString(),
+        text: message.content,
       });
     });
 
-    console.log('chatCtx', chatCtx);
-
-    const agent = new multimodal.MultimodalAgent({ model, fncCtx, chatCtx });
+    const agent = new multimodal.MultimodalAgent({
+      model,
+      fncCtx,
+      chatCtx,
+      maxTextResponseRetries: 1,
+    });
 
     agent.on('agent_speech_committed', async (message: llm.ChatMessage) => {
       console.info('agent_speech_committed: %o', message.content);
@@ -172,8 +183,6 @@ export default defineAgent({
     const session = await agent
       .start(ctx.room, participant)
       .then((session) => session as openai.realtime.RealtimeSession);
-
-    console.log('Session messages', session.chatCtx);
 
     session.response.create();
   },

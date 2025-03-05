@@ -1,23 +1,19 @@
 {
   "plugins": ["@typescript-eslint/eslint-plugin"],
-  "extends": [
-    "prettier",
-    "plugin:prettier/recommended",
-    "plugin:@typescript-eslint/recommended"
-  ],
+  "extends": ["prettier", "plugin:prettier/recommended", "plugin:@typescript-eslint/recommended"],
   "parserOptions": {
     "ecmaVersion": 2022,
-    "ecmaFeatures": {}
+    "ecmaFeatures": {},
   },
   "settings": {},
   "ignorePatterns": ["dist/*"],
   "rules": {
     "space-before-function-parens": 0,
-    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
     "import/export": 0,
     "@typescript-eslint/ban-ts-comment": "warn",
     "@typescript-eslint/no-empty-interface": "warn",
     "@typescript-eslint/consistent-type-imports": "warn",
-    "@typescript-eslint/no-explicit-any": "warn"
-  }
+    "@typescript-eslint/no-explicit-any": "warn",
+  },
 }
