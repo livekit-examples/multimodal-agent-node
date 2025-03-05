@@ -9,6 +9,8 @@
     "start": "tsc && node dist/agent.js start",
     "lint": "eslint -f unix \"**/*.ts\" --fix",
     "format": "prettier --write .",
+    "zep:delete-users": "npx tsx src/scripts/zep/delete-users.ts",
+    "zep:list-users": "npx tsx src/scripts/zep/list-users.ts",
     "populate-graph-1": "tsc && node dist/scripts/populate-graph-1.js",
     "populate-graph-2": "tsc && node dist/scripts/populate-graph-2.js"
   },
