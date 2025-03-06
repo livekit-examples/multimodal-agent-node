@@ -5,7 +5,7 @@ import type { Tool } from '../type.js';
 
 const SIP_PARTICIPANTS = {
   SALES: {
-    sipTrunkId: 'ST_GvmEnMvCkWtR', // sip trunk to use for the call
+    sipTrunkId: 'ST_MiSwKTmB6QBQ', // sip trunk to use for the call
     number: '+18784255207', // number to dial,
     participantIdentity: 'SALES_TEAM',
     participantName: 'Sales Team',
