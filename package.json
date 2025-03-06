@@ -7,7 +7,7 @@
     "build": "tsc",
     "lint": "eslint -f unix \"**/*.ts\""
   },
-  "packageManager": "pnpm@9.15.6",
+  "packageManager": "pnpm@9.15.7",
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.15.0",
