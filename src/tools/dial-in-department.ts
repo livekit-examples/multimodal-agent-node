@@ -6,7 +6,7 @@ import type { Tool } from '../type.js';
 const SIP_PARTICIPANTS = {
   SALES: {
     sipTrunkId: 'ST_MiSwKTmB6QBQ', // sip trunk to use for the call
-    number: '+18784255207', // number to dial,
+    number: '+442037951838', // number to dial,
     participantIdentity: 'SALES_TEAM',
     participantName: 'Sales Team',
   },
@@ -38,8 +38,8 @@ const dialDepartment = async (department: Department, ctx: JobContext) => {
 };
 
 export const dialRelavantDepartment: Tool = (user, ctx) => ({
-  description: `Called when the user wants assistance from a specific department 
-        
+  description: `Called when the user wants assistance from a specific department
+
         The possible departments are:
         1. Sales department
         2. Customer support department
