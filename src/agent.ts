@@ -3,6 +3,7 @@ import { llm } from '@livekit/agents';
 import { type JobContext, WorkerOptions, cli, defineAgent, multimodal } from '@livekit/agents';
 import * as openai from '@livekit/agents-plugin-openai';
 import dotenv from 'dotenv';
+import { randomUUID } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { zep } from './clients/zep.js';
@@ -101,7 +102,7 @@ export default defineAgent({
       throw new Error('User ID is required');
     }
 
-    const zepSession = await getOrCreateZepSession(user.userId, 'test-room');
+    const zepSession = await getOrCreateZepSession(user.userId, randomUUID());
 
     if (!zepSession?.sessionId) {
       throw new Error('Zep session is required');
