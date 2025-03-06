@@ -4,15 +4,9 @@ import type { Tool } from '../type.js';
 
 export const queryZepGraph = async (text: string, groupId: string): Promise<string | null> => {
   try {
-    const { edges } = await zep.graph.search({
-      query: text,
-      groupId: groupId,
-      scope: 'edges',
-    });
-    const data = edges?.map((edge) => `${edge.fact.toString()}`).join('\n');
-    console.log({ data });
+    const episodes = await zep.graph.episode.getByGroupId(groupId);
 
-    return data ?? '';
+    return JSON.stringify(episodes, null, 2);
   } catch (error) {
     console.error('Keyword handling failed:', error);
     return `Failed to query database`;

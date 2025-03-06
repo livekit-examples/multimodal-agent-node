@@ -8,6 +8,9 @@ const TOPICS_GROUP_ID_MAP = {
   takeaway: 'food-ordering-help-group',
   ordering: 'food-ordering-help-group',
 
+  // Topics that relate to volkswagen cars and relavant graphs
+  volkswagen: 'volkswagen-cars',
+
   // Topics that relate to smart shopping and saving money
   'smart-shopping': 'smart-shopping-group',
   'saving-money': 'smart-shopping-group',
@@ -23,10 +26,12 @@ export const getDataFromZep: Tool = () => ({
         4. smart-shopping
         5. saving-money
 
+        7. volkswagen cars
+
         Each of these topics is associated with a group id as follows
 
         ${JSON.stringify(TOPICS_GROUP_ID_MAP)}
-        
+
         Use this function to retrieve data from the database before responding to the user
         `,
   parameters: z.object({
