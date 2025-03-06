@@ -109,7 +109,7 @@ export default defineAgent({
 
     const memory = await zep.memory.get(zepSession.sessionId);
 
-    console.log({ memory });
+    // console.log({ memory });
 
     const sessionMessages = await zep.memory.getSessionMessages(zepSession.sessionId, {
       limit: 100,
