@@ -11,7 +11,9 @@
     "format": "prettier --write .",
     "zep:clear-zep": "tsx src/scripts/zep/delete-groups.ts && tsx src/scripts/zep/delete-users.ts",
     "zep:list-users": "tsx src/scripts/zep/list-users.ts",
+    "zep:delete-users": "tsx src/scripts/zep/delete-users.ts",
     "zep:list-groups": "tsx src/scripts/zep/list-groups.ts",
+    "zep:delete-groups": "tsx src/scripts/zep/delete-groups.ts",
     "zep:seed-business-graph-1": "tsx src/scripts/zep/seed-business-graph-1.ts",
     "zep:seed-business-graph-2": "tsx src/scripts/zep/seed-business-graph-2.ts"
   },
