@@ -10,6 +10,7 @@ import { zep } from './clients/zep.js';
 import { getOrAddZepUser, tools } from './lib/index.js';
 import { dialRelavantDepartment } from './tools/dial-in-department.js';
 import { getDataFromZep } from './tools/get-data-from-zep.js';
+import { randomJoke } from './tools/joke.js';
 import { updateUserName } from './tools/update-user-name.js';
 import { weather } from './tools/weather.js';
 
@@ -136,6 +137,7 @@ export default defineAgent({
       dialRelavantDepartment,
       updateUserName,
       getDataFromZep,
+      randomJoke,
     });
 
     const chatCtx: llm.ChatContext = new llm.ChatContext();
