@@ -1,4 +1,5 @@
-import type { llm } from '@livekit/agents';
+import { Zep } from '@getzep/zep-cloud';
+import { llm } from '@livekit/agents';
 import { type JobContext, WorkerOptions, cli, defineAgent, multimodal } from '@livekit/agents';
 import * as openai from '@livekit/agents-plugin-openai';
 import dotenv from 'dotenv';
@@ -15,6 +16,72 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const envPath = path.join(__dirname, '../.env.local');
 dotenv.config({ path: envPath });
 
+type SessionId = `${string}-${string}`;
+
+// Why do we need this?
+// We want to be able to retrieve past conversation witht the user given userId and roomId
+// So we concatenate userId and roomId to construct a unique sesion id specific to a room and user
+const constructUserSessionId = (userId: string, roomId: string): SessionId => {
+  return `${userId}-${roomId}`;
+};
+
+const appendMessageToSession = async (
+  sessionId: SessionId,
+  message: string,
+  role: Zep.RoleType,
+) => {
+  await zep.memory.add(sessionId, {
+    messages: [
+      {
+        content: message,
+        roleType: role,
+      },
+    ],
+  });
+};
+
+const getOrCreateZepSession = async (userId: string, roomId: string) => {
+  const sessionId = constructUserSessionId(userId, roomId);
+
+  console.log('Get or add session', sessionId);
+  try {
+    const session = (await zep.memory.getSession(sessionId)) as Promise<
+      Zep.Session & { sessionId: SessionId }
+    >;
+    return session;
+  } catch (error) {
+    if (error instanceof Zep.NotFoundError) {
+      const newSession = (await zep.memory.addSession({
+        sessionId: sessionId,
+        userId: userId,
+      })) as Promise<Zep.Session & { sessionId: SessionId }>;
+      return newSession;
+    } else throw error;
+  }
+};
+
+const zepRoleToChatRole = (role: Zep.RoleType): llm.ChatRole => {
+  switch (role) {
+    case Zep.RoleType.AssistantRole:
+      return llm.ChatRole.ASSISTANT;
+
+    case Zep.RoleType.UserRole:
+      return llm.ChatRole.USER;
+
+    case Zep.RoleType.SystemRole:
+      return llm.ChatRole.SYSTEM;
+
+    case Zep.RoleType.FunctionRole:
+      return llm.ChatRole.TOOL;
+
+    case Zep.RoleType.ToolRole:
+      return llm.ChatRole.TOOL;
+
+    default:
+      return llm.ChatRole.SYSTEM;
+  }
+};
+
 export default defineAgent({
   entry: async (ctx: JobContext) => {
     await ctx.connect();
@@ -24,7 +91,9 @@ export default defineAgent({
     // starting assistant example agent for "sip_+447949414141"
     // starting assistant example agent for "interactive-tesseract"
 
-    console.log(`Starting assistant example agent for "${participant.identity}"`);
+    console.log(
+      `Starting assistant example agent for "${process.env.FORCE_ZEP_IDENTITY ?? participant.identity}"`,
+    );
 
     const user = await getOrAddZepUser(process.env.FORCE_ZEP_IDENTITY ?? participant.identity);
 
@@ -32,10 +101,22 @@ export default defineAgent({
       throw new Error('User ID is required');
     }
 
-    const { facts } = await zep.user.getFacts(user.userId);
+    const zepSession = await getOrCreateZepSession(user.userId, 'test-room');
+
+    if (!zepSession?.sessionId) {
+      throw new Error('Zep session is required');
+    }
+
+    const memory = await zep.memory.get(zepSession.sessionId);
+
+    // console.log({ memory });
+
+    const sessionMessages = await zep.memory.getSessionMessages(zepSession.sessionId, {
+      limit: 100,
+    });
 
     const model = new openai.realtime.RealtimeModel({
-      instructions: `You are a helpful assistant and specialize in helping customers with delivery, takeaway and instore purchaing services.
+      instructions: `You are a helpful assistant and specialize in helping customers with company products and recipes.
 
       ${
         user.firstName
@@ -43,49 +124,61 @@ export default defineAgent({
           : `You don't know the user's name, you should ask for it. So you can call them by their name in future conversations.`
       }
 
-
-      ${
-        facts?.length
-          ? `This is what we know about the user. 
-             Use this information to create context for the conversation. 
-             Do not give responses to user based on these facts unless user brings something up that could be related to these facts.
-             Do not call tools or functions during startup unless user wants you to do so.
-             `
-          : ''
-      }
-      ${facts?.map((fact) => `${fact.content}`).join('\n')}  
+      ${memory.context}
       `,
 
       voice: 'ballad',
     });
 
-    const fncCtx: llm.FunctionContext = tools(user, ctx, participant).build({
+    const fncCtx: llm.FunctionContext = tools(user, ctx, participant, zepSession).build({
       weather,
       dialRelavantDepartment,
       updateUserName,
       getDataFromZep,
     });
 
-    const agent = new multimodal.MultimodalAgent({ model, fncCtx });
+    const chatCtx: llm.ChatContext = new llm.ChatContext();
 
-    agent.on('agent_speech_committed', (message: llm.ChatMessage) => {
-      console.info('agent_speech_committed: %o', message.content);
+    sessionMessages.messages?.forEach((message) => {
+      chatCtx.append({
+        role: zepRoleToChatRole(message.roleType),
+        text: message.content,
+      });
     });
-    agent.on('agent_speech_interupted', (message: llm.ChatMessage) => {
+
+    const agent = new multimodal.MultimodalAgent({
+      model,
+      fncCtx,
+      chatCtx,
+      maxTextResponseRetries: 1,
+    });
+
+    agent.on('agent_speech_committed', async (message: llm.ChatMessage) => {
+      console.info('agent_speech_committed: %o', message.content);
+
+      await appendMessageToSession(
+        zepSession.sessionId,
+        message.content?.toString() ?? '',
+        Zep.RoleType.AssistantRole,
+      );
+    });
+    agent.on('agent_speech_interupted', async (message: llm.ChatMessage) => {
       console.info('agent_speech_interupted: %o', message.content);
+
+      await appendMessageToSession(
+        zepSession.sessionId,
+        message.content?.toString() ?? '',
+        Zep.RoleType.AssistantRole,
+      );
     });
     agent.on('user_speech_committed', async (message: llm.ChatMessage) => {
       console.info('user_speech_committed: %o', message.content);
 
-      if (!message.content) {
-        return;
-      }
-
-      await zep.graph.add({
-        userId: process.env.FORCE_ZEP_IDENTITY ?? participant.identity,
-        type: 'message',
-        data: message.content.toString(),
-      });
+      await appendMessageToSession(
+        zepSession.sessionId,
+        message.content?.toString() ?? '',
+        Zep.RoleType.UserRole,
+      );
     });
 
     const session = await agent

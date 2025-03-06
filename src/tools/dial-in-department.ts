@@ -49,7 +49,7 @@ export const dialRelavantDepartment: Tool = (user, ctx) => ({
     department: zDepartment,
   }),
   execute: async ({ department }) => {
-    console.debug(`executing dialRelavantDepartmentDID function for ${department}`);
+    console.debug(`executing dialRelavantDepartment function for ${department}`);
     try {
       await dialDepartment(department, ctx);
       return `Calling ${department} now.`;

@@ -7,4 +7,5 @@ export type Tool = (
   user: Zep.User,
   ctx: JobContext,
   participant: RemoteParticipant,
+  zepSession: Zep.Session,
 ) => CallableFunction;
