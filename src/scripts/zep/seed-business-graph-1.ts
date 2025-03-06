@@ -7,9 +7,13 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const envPath = path.join(__dirname, '../../../.env.local');
 dotenv.config({ path: envPath });
 
-const GROUP_ID = 'product-catalog';
+const group = {
+  groupId: 'product-catalog',
+  name: 'Products',
+  description: 'Products catalog for the business',
+};
 
-const PRODUCTS_DATA = [
+const DATA = [
   {
     id: 1,
     title: 'Essence Mascara Lash Princess',
@@ -190,20 +194,16 @@ async function main() {
   try {
     const { groups } = await zep.group.listAllGroups();
 
-    const alreadyExists = groups?.find((g) => g.groupId === GROUP_ID);
+    const alreadyExists = groups?.find((g) => g.groupId === group.groupId);
 
     if (!alreadyExists) {
-      await zep.group.add({
-        groupId: GROUP_ID,
-        name: 'Products',
-        description: 'Products catalog for the business',
-      });
+      await zep.group.add(group);
     }
 
     console.log('Adding products graph...');
     const g = await zep.graph.add({
-      groupId: GROUP_ID,
-      data: JSON.stringify(PRODUCTS_DATA),
+      groupId: group.groupId,
+      data: JSON.stringify(DATA),
       type: 'json',
     });
 

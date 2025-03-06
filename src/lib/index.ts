@@ -2,10 +2,9 @@ import { Zep } from '@getzep/zep-cloud';
 import { zep } from '../clients/zep.js';
 import type { Tool } from '../type.js';
 
-export const queryZepGraph = async (text: string, groupId: string): Promise<string | null> => {
+export const queryZepGraph = async (groupId: string): Promise<string | null> => {
   try {
     const episodes = await zep.graph.episode.getByGroupId(groupId);
-
     return JSON.stringify(episodes, null, 2);
   } catch (error) {
     console.error('Keyword handling failed:', error);

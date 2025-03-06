@@ -35,7 +35,7 @@ export default defineAgent({
     const { facts } = await zep.user.getFacts(user.userId);
 
     const model = new openai.realtime.RealtimeModel({
-      instructions: `You are a helpful assistant and specialize in helping customers with delivery, takeaway and instore purchaing services.
+      instructions: `You are a helpful assistant and specialize in helping customers with company products and recipes.
 
       ${
         user.firstName
@@ -46,14 +46,14 @@ export default defineAgent({
 
       ${
         facts?.length
-          ? `This is what we know about the user. 
-             Use this information to create context for the conversation. 
+          ? `This is what we know about the user.
+             Use this information to create context for the conversation.
              Do not give responses to user based on these facts unless user brings something up that could be related to these facts.
              Do not call tools or functions during startup unless user wants you to do so.
              `
           : ''
       }
-      ${facts?.map((fact) => `${fact.content}`).join('\n')}  
+      ${facts?.map((fact) => `${fact.content}`).join('\n')}
       `,
 
       voice: 'ballad',
