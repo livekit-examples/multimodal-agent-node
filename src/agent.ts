@@ -3,12 +3,14 @@ import { llm } from '@livekit/agents';
 import { type JobContext, WorkerOptions, cli, defineAgent, multimodal } from '@livekit/agents';
 import * as openai from '@livekit/agents-plugin-openai';
 import dotenv from 'dotenv';
+import { randomUUID } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { zep } from './clients/zep.js';
 import { getOrAddZepUser, tools } from './lib/index.js';
 import { dialRelavantDepartment } from './tools/dial-in-department.js';
 import { getDataFromZep } from './tools/get-data-from-zep.js';
+import { randomJoke } from './tools/joke.js';
 import { updateUserName } from './tools/update-user-name.js';
 import { weather } from './tools/weather.js';
 
@@ -101,7 +103,7 @@ export default defineAgent({
       throw new Error('User ID is required');
     }
 
-    const zepSession = await getOrCreateZepSession(user.userId, 'test-room');
+    const zepSession = await getOrCreateZepSession(user.userId, randomUUID());
 
     if (!zepSession?.sessionId) {
       throw new Error('Zep session is required');
@@ -135,6 +137,7 @@ export default defineAgent({
       dialRelavantDepartment,
       updateUserName,
       getDataFromZep,
+      randomJoke,
     });
 
     const chatCtx: llm.ChatContext = new llm.ChatContext();
