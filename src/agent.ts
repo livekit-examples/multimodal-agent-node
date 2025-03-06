@@ -91,7 +91,9 @@ export default defineAgent({
     // starting assistant example agent for "sip_+447949414141"
     // starting assistant example agent for "interactive-tesseract"
 
-    console.log(`Starting assistant example agent for "${participant.identity}"`);
+    console.log(
+      `Starting assistant example agent for "${process.env.FORCE_ZEP_IDENTITY ?? participant.identity}"`,
+    );
 
     const user = await getOrAddZepUser(process.env.FORCE_ZEP_IDENTITY ?? participant.identity);
 
@@ -105,15 +107,13 @@ export default defineAgent({
       throw new Error('Zep session is required');
     }
 
-    console.log('sessionId', zepSession.sessionId);
+    const memory = await zep.memory.get(zepSession.sessionId);
+
+    console.log({ memory });
 
     const sessionMessages = await zep.memory.getSessionMessages(zepSession.sessionId, {
       limit: 100,
     });
-
-    // const userFacts = await zep.user.getFacts(user.userId);
-
-    // console.log({ facts: userFacts.facts });
 
     const model = new openai.realtime.RealtimeModel({
       instructions: `You are a helpful assistant and specialize in helping customers with company products and recipes.
@@ -123,8 +123,9 @@ export default defineAgent({
           ? `You're speaking with ${user.firstName}. Address them as such.`
           : `You don't know the user's name, you should ask for it. So you can call them by their name in future conversations.`
       }
+
+      ${memory.context}
       `,
-      // ${userFacts.facts?.length ? `You know ${userFacts.facts.map((f) => f.content).join(', ')} about the user` : ''}
 
       voice: 'ballad',
     });
