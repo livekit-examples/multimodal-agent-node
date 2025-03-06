@@ -17,7 +17,7 @@ async function main() {
 
   for (const g of groups) {
     if (!g.groupId) {
-      console.log('No groupId found!');
+      console.log(`No groupId found for group: ${g.name}`);
       continue;
     }
 
