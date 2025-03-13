@@ -33,29 +33,28 @@ type Config = {
   voice: string | null;
   organisationId: string | null;
 };
+const CXCORTEX_AGENT_API_URL = process.env.CXCORTEX_AGENT_API_URL;
+const URL_WS = process.env.LIVEKIT_URL;
 
 const loadConfig = (): Promise<Config | null> => {
-  const url = process.env.CONFIG_SOURCE_URL;
-  const urlWS = process.env.LIVEKIT_URL;
-
   return new Promise(async (resolve, reject) => {
-    if (!url) {
-      reject(new Error('CONFIG_SOURCE_URL is required'));
+    if (!CXCORTEX_AGENT_API_URL) {
+      reject(new Error('CXCORTEX_AGENT_API_URL is required'));
       return process.exit(1);
     }
 
-    if (!urlWS) {
+    if (!URL_WS) {
       reject(new Error('LIVEKIT_URL is required'));
       return process.exit(1);
     }
 
-    const res = await fetch(`${url}?urlWS=${urlWS}`, {
+    const res = await fetch(`${CXCORTEX_AGENT_API_URL}`, {
       method: 'POST',
       headers: {
-        authorization: `Bearer ${process.env.AGENT_API_KEY}`,
+        authorization: `Bearer ${process.env.CXCORTEX_AGENT_API_KEY}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ urlWS }),
+      body: JSON.stringify({ urlWS: URL_WS }),
     });
 
     if (res.status !== 200) {
