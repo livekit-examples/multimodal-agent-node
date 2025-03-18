@@ -7,7 +7,13 @@ import { randomUUID } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { zep } from './clients/zep.js';
-import { getOrAddZepUser, tools } from './lib/index.js';
+import {
+  appendMessageToSession,
+  getOrAddZepUser,
+  getOrCreateZepSession,
+  tools,
+  zepRoleToChatRole,
+} from './lib/index.js';
 import { dialRelavantDepartment } from './tools/dial-in-department.js';
 import { getDataFromZep } from './tools/get-data-from-zep.js';
 import { randomJoke } from './tools/joke.js';
@@ -18,71 +24,50 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const envPath = path.join(__dirname, '../.env.local');
 dotenv.config({ path: envPath });
 
-type SessionId = `${string}-${string}`;
-
-// Why do we need this?
-// We want to be able to retrieve past conversation witht the user given userId and roomId
-// So we concatenate userId and roomId to construct a unique sesion id specific to a room and user
-const constructUserSessionId = (userId: string, roomId: string): SessionId => {
-  return `${userId}-${roomId}`;
+type Config = {
+  id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  instruction: string;
+  voice: string | null;
+  organisationId: string | null;
 };
+const CXCORTEX_AGENT_API_URL = process.env.CXCORTEX_AGENT_API_URL;
+const URL_WS = process.env.LIVEKIT_URL;
 
-const appendMessageToSession = async (
-  sessionId: SessionId,
-  message: string,
-  role: Zep.RoleType,
-) => {
-  await zep.memory.add(sessionId, {
-    messages: [
-      {
-        content: message,
-        roleType: role,
+const loadConfig = (): Promise<Config | null> => {
+  return new Promise(async (resolve, reject) => {
+    if (!CXCORTEX_AGENT_API_URL) {
+      reject(new Error('CXCORTEX_AGENT_API_URL is required'));
+      return process.exit(1);
+    }
+
+    if (!URL_WS) {
+      reject(new Error('LIVEKIT_URL is required'));
+      return process.exit(1);
+    }
+
+    const res = await fetch(`${CXCORTEX_AGENT_API_URL}`, {
+      method: 'POST',
+      headers: {
+        authorization: `Bearer ${process.env.CXCORTEX_AGENT_API_KEY}`,
+        'Content-Type': 'application/json',
       },
-    ],
+      body: JSON.stringify({ urlWS: URL_WS }),
+    });
+
+    if (res.status !== 200) {
+      reject(new Error('Failed to fetch config'));
+      return process.exit(1);
+    }
+
+    const data = (await res.json()) as Config;
+    return resolve(data);
   });
 };
 
-const getOrCreateZepSession = async (userId: string, roomId: string) => {
-  const sessionId = constructUserSessionId(userId, roomId);
-
-  console.log('Get or add session', sessionId);
-  try {
-    const session = (await zep.memory.getSession(sessionId)) as Promise<
-      Zep.Session & { sessionId: SessionId }
-    >;
-    return session;
-  } catch (error) {
-    if (error instanceof Zep.NotFoundError) {
-      const newSession = (await zep.memory.addSession({
-        sessionId: sessionId,
-        userId: userId,
-      })) as Promise<Zep.Session & { sessionId: SessionId }>;
-      return newSession;
-    } else throw error;
-  }
-};
-
-const zepRoleToChatRole = (role: Zep.RoleType): llm.ChatRole => {
-  switch (role) {
-    case Zep.RoleType.AssistantRole:
-      return llm.ChatRole.ASSISTANT;
-
-    case Zep.RoleType.UserRole:
-      return llm.ChatRole.USER;
-
-    case Zep.RoleType.SystemRole:
-      return llm.ChatRole.SYSTEM;
-
-    case Zep.RoleType.FunctionRole:
-      return llm.ChatRole.TOOL;
-
-    case Zep.RoleType.ToolRole:
-      return llm.ChatRole.TOOL;
-
-    default:
-      return llm.ChatRole.SYSTEM;
-  }
-};
+const config = await loadConfig();
 
 export default defineAgent({
   entry: async (ctx: JobContext) => {
@@ -111,14 +96,13 @@ export default defineAgent({
 
     const memory = await zep.memory.get(zepSession.sessionId);
 
-    // console.log({ memory });
-
     const sessionMessages = await zep.memory.getSessionMessages(zepSession.sessionId, {
       limit: 100,
     });
 
     const model = new openai.realtime.RealtimeModel({
-      instructions: `You are a helpful assistant and specialize in helping customers with company products and recipes.
+      instructions: `
+      ${config?.instruction ?? 'You are a helpful assistant'}
 
       ${
         user.firstName
@@ -129,7 +113,7 @@ export default defineAgent({
       ${memory.context}
       `,
 
-      voice: 'ballad',
+      voice: config?.voice ?? 'ballad',
     });
 
     const fncCtx: llm.FunctionContext = tools(user, ctx, participant, zepSession).build({
