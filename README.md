@@ -1,3 +1,6 @@
+> [!WARNING]
+> This example uses an outdated version of LiveKit Agents. See the [agent-starter-node](https://github.com/livekit-examples/agent-starter-node) repository for the latest example.
+
 <a href="https://livekit.io/">
   <img src="./.github/assets/livekit-mark.png" alt="LiveKit logo" width="100" height="100">
 </a>
